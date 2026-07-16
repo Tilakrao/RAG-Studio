@@ -15,7 +15,12 @@ langchain-chroma>=0.1.2
 chromadb>=0.5.0
 sentence-transformers>=3.0.0
 transformers>=4.41.0
-torch==2.2.2+cpu
+
+# Tell pip to check the PyTorch CPU repository first
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+# Define your requirements
+torch==2.2.2
 
 pypdf>=4.2.0
 pdfminer.six>=20231228
