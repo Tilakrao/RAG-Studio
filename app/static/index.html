@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>RAG Studio</title>
+  <link rel="stylesheet" href="/static/css/main.css?v=12"/>
+</head>
+<body>
+
+<!-- ═══════════════════════ LANDING PAGE ═══════════════════════ -->
+<div id="landing" class="ld-page">
+
+  <!-- NAV -->
+  <nav class="ld-nav">
+    <div class="ld-nav-logo">
+      <svg class="ld-nav-icon" viewBox="0 0 28 28" fill="none">
+        <ellipse cx="14" cy="22" rx="10" ry="2.8" fill="#7C3AED" opacity="0.25"/>
+        <ellipse cx="14" cy="18" rx="10" ry="2.8" fill="#7C3AED" opacity="0.5"/>
+        <ellipse cx="14" cy="14" rx="10" ry="2.8" fill="#7C3AED" opacity="0.8"/>
+        <circle cx="13" cy="9" r="5.5" stroke="#A78BFA" stroke-width="1.8"/>
+        <line x1="17" y1="13" x2="21" y2="17" stroke="#A78BFA" stroke-width="1.8" stroke-linecap="round"/>
+        <circle cx="13" cy="9" r="2" fill="#A78BFA"/>
+      </svg>
+      <span>RAG Studio</span>
+    </div>
+    <div class="ld-nav-links">
+      <a href="#ld-about" class="ld-nav-link">About</a>
+      <a href="#ld-arch" class="ld-nav-link">Architecture</a>
+      <a href="#ld-how-to-use" class="ld-nav-link">How to Use</a>
+      <a href="#ld-internals" class="ld-nav-link">How it Works</a>
+      <a href="#ld-who" class="ld-nav-link">Who Can Use</a>
+      <a href="#ld-config" class="ld-nav-link">Models</a>
+    </div>
+    <div class="ld-nav-actions">
+      <span class="ld-nav-version">v1.0</span>
+      <button class="ld-btn-signin js-open-login">Launch App &rarr;</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="ld-hero">
+    <div class="ld-hero-glow ld-hero-glow--1"></div>
+    <div class="ld-hero-glow ld-hero-glow--2"></div>
+    <div class="ld-hero-glow ld-hero-glow--3"></div>
+
+    <div class="ld-hero-content">
+      <div class="ld-hero-badge">
+        <span class="ld-badge-dot"></span>
+        Open Source &nbsp;&middot;&nbsp; Local-first &nbsp;&middot;&nbsp; No cloud required
+      </div>
+      <h1 class="ld-hero-h1">
+        The Open<br/>
+        <span class="ld-grad-text">RAG Evaluation</span><br/>
+        Studio
+      </h1>
+      <p class="ld-hero-desc">
+        Compare loaders, chunkers, embedders, search strategies, and rerankers
+        side-by-side. Find your optimal RAG configuration — all running locally
+        on your machine with zero cloud dependency.
+      </p>
+      <div class="ld-hero-btns">
+        <button class="ld-cta js-open-login">
+          Launch App
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+        <a class="ld-cta-ghost" href="#ld-features">Explore Features &darr;</a>
+      </div>
+    </div>
+
+    <!-- Hero visual: pipeline flow -->
+    <div class="ld-hero-visual">
+      <div class="ld-pipe-flow">
+        <div class="ld-pipe-node ld-pipe-node--upload">
+          <div class="ld-pipe-node-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+          </div>
+          <div class="ld-pipe-node-label">Upload PDF</div>
+          <div class="ld-pipe-node-sub">PyMuPDF · OCR</div>
+        </div>
+        <div class="ld-pipe-connector"></div>
+        <div class="ld-pipe-node ld-pipe-node--chunk">
+          <div class="ld-pipe-node-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          </div>
+          <div class="ld-pipe-node-label">Chunk &amp; Embed</div>
+          <div class="ld-pipe-node-sub">6 splitters · 6 models</div>
+        </div>
+        <div class="ld-pipe-connector"></div>
+        <div class="ld-pipe-node ld-pipe-node--search">
+          <div class="ld-pipe-node-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <div class="ld-pipe-node-label">Search &amp; Compare</div>
+          <div class="ld-pipe-node-sub">7 methods · Reranking</div>
+        </div>
+      </div>
+
+      <!-- mock result card -->
+      <div class="ld-mock-window">
+        <div class="ld-mock-titlebar">
+          <div class="ld-mock-dots"><span></span><span></span><span></span></div>
+          <span class="ld-mock-title">RAG Studio &mdash; Search Results</span>
+        </div>
+        <div class="ld-mock-body">
+          <div class="ld-mock-query">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            What is the revenue forecast for Q4?
+          </div>
+          <div class="ld-mock-results">
+            <div class="ld-mock-result ld-mock-result--1">
+              <div class="ld-mock-rank">#1</div>
+              <div class="ld-mock-text">Revenue is projected to reach $2.4B in Q4 2024, representing a 18% YoY growth driven by enterprise...</div>
+              <div class="ld-mock-score"><div class="ld-mock-bar" style="width:94%"></div><span>0.94</span></div>
+            </div>
+            <div class="ld-mock-result ld-mock-result--2">
+              <div class="ld-mock-rank">#2</div>
+              <div class="ld-mock-text">The Q4 financial forecast includes revenue of $2.1B from existing clients and $0.3B from new...</div>
+              <div class="ld-mock-score"><div class="ld-mock-bar" style="width:87%"></div><span>0.87</span></div>
+            </div>
+            <div class="ld-mock-result ld-mock-result--3">
+              <div class="ld-mock-rank">#3</div>
+              <div class="ld-mock-text">Management expects Q4 to be the strongest quarter with revenue guidance of $2.3–2.5B range...</div>
+              <div class="ld-mock-score"><div class="ld-mock-bar" style="width:79%"></div><span>0.79</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="ld-stats-bar">
+    <div class="ld-stat"><div class="ld-stat-n">6</div><div class="ld-stat-l">PDF Loaders</div></div>
+    <div class="ld-stat-sep"></div>
+    <div class="ld-stat"><div class="ld-stat-n">6</div><div class="ld-stat-l">Embedding Models</div></div>
+    <div class="ld-stat-sep"></div>
+    <div class="ld-stat"><div class="ld-stat-n">7</div><div class="ld-stat-l">Search Methods</div></div>
+    <div class="ld-stat-sep"></div>
+    <div class="ld-stat"><div class="ld-stat-n">4</div><div class="ld-stat-l">Reranking Models</div></div>
+    <div class="ld-stat-sep"></div>
+    <div class="ld-stat"><div class="ld-stat-n">&#8734;</div><div class="ld-stat-l">Configurations</div></div>
+  </div>
+
+  <!-- FEATURES -->
+  <section id="ld-features" class="ld-features">
+    <div class="ld-section-hdr">
+      <div class="ld-section-tag">Features</div>
+      <h2 class="ld-section-h2">Everything you need to evaluate RAG</h2>
+      <p class="ld-section-sub">A complete toolkit for building, running, and comparing Retrieval-Augmented Generation pipelines</p>
+    </div>
+    <div class="ld-feat-grid">
+
+      <div class="ld-feat-card ld-feat-card--purple">
+        <div class="ld-feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M5.34 18.66l-1.41 1.41M20 12h2M2 12h2M17.66 18.66l1.41 1.41M6.34 5.34 4.93 4.93M12 20v2M12 2v2"/></svg>
+        </div>
+        <h3>Pipeline Studio</h3>
+        <p>Configure multiple RAG pipelines with different loaders, splitters, and embedding models. Run them in parallel and compare results side-by-side.</p>
+        <div class="ld-feat-tags"><span>Parallel runs</span><span>Config compare</span></div>
+      </div>
+
+      <div class="ld-feat-card ld-feat-card--blue">
+        <div class="ld-feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <h3>7 Search Methods</h3>
+        <p>Dense cosine, L2, dot-product, BM25 keyword, and three hybrid dense+BM25 combinations using Reciprocal Rank Fusion.</p>
+        <div class="ld-feat-tags"><span>Dense</span><span>Sparse</span><span>Hybrid RRF</span></div>
+      </div>
+
+      <div class="ld-feat-card ld-feat-card--green">
+        <div class="ld-feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h3>Smart Reranking</h3>
+        <p>Cross-encoder models (TinyBERT, MiniLM-L6/L12, BGE Base) re-score and reorder retrieval results for higher precision.</p>
+        <div class="ld-feat-tags"><span>TinyBERT</span><span>MiniLM</span><span>BGE</span></div>
+      </div>
+
+      <div class="ld-feat-card ld-feat-card--amber">
+        <div class="ld-feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </div>
+        <h3>Pin &amp; Compare</h3>
+        <p>Pin any search result column, then search with different parameters to compare side-by-side with a VS divider and params strip.</p>
+        <div class="ld-feat-tags"><span>Pin results</span><span>Side-by-side VS</span></div>
+      </div>
+
+      <div class="ld-feat-card ld-feat-card--red">
+        <div class="ld-feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <h3>Auto-OCR Fallback</h3>
+        <p>PyMuPDF detects scanned PDFs and automatically falls back to Tesseract OCR, so no document is left unprocessed.</p>
+        <div class="ld-feat-tags"><span>PyMuPDF</span><span>Tesseract OCR</span></div>
+      </div>
+
+      <div class="ld-feat-card ld-feat-card--teal">
+        <div class="ld-feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <h3>Real-time Step Log</h3>
+        <p>Watch every pipeline step as it happens — loading, chunking, embedding, storing — with per-step timing and chunk counts.</p>
+        <div class="ld-feat-tags"><span>Live updates</span><span>Step timing</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="ld-how">
+    <div class="ld-section-hdr">
+      <div class="ld-section-tag">Workflow</div>
+      <h2 class="ld-section-h2">From PDF to insights in three steps</h2>
+    </div>
+    <div class="ld-how-steps">
+      <div class="ld-how-step">
+        <div class="ld-how-num">01</div>
+        <div class="ld-how-content">
+          <h3>Upload your documents</h3>
+          <p>Drop any PDF — text-based or scanned. RAG Studio handles OCR automatically for image-heavy documents.</p>
+        </div>
+      </div>
+      <div class="ld-how-arrow">&rarr;</div>
+      <div class="ld-how-step">
+        <div class="ld-how-num">02</div>
+        <div class="ld-how-content">
+          <h3>Configure &amp; run pipelines</h3>
+          <p>Choose loaders, splitters (chunk size, overlap), and embedding models. Add up to 4 configs to the comparison basket and run them in parallel.</p>
+        </div>
+      </div>
+      <div class="ld-how-arrow">&rarr;</div>
+      <div class="ld-how-step">
+        <div class="ld-how-num">03</div>
+        <div class="ld-how-content">
+          <h3>Search, rerank &amp; compare</h3>
+          <p>Query with any search method. Apply a cross-encoder reranker. Pin results and swap parameters to find what works best for your use case.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECH STACK -->
+  <section class="ld-tech">
+    <div class="ld-section-hdr">
+      <div class="ld-section-tag">Built with</div>
+      <h2 class="ld-section-h2">Open-source, battle-tested libraries</h2>
+    </div>
+    <div class="ld-tech-grid">
+      <div class="ld-tech-badge"><span class="ld-tech-dot ld-tech-dot--green"></span>FastAPI</div>
+      <div class="ld-tech-badge"><span class="ld-tech-dot ld-tech-dot--purple"></span>ChromaDB</div>
+      <div class="ld-tech-badge"><span class="ld-tech-dot ld-tech-dot--blue"></span>LangChain</div>
+      <div class="ld-tech-badge"><span class="ld-tech-dot ld-tech-dot--amber"></span>HuggingFace</div>
+      <div class="ld-tech-badge"><span class="ld-tech-dot ld-tech-dot--red"></span>Sentence-Transformers</div>
+      <div class="ld-tech-badge"><span class="ld-tech-dot ld-tech-dot--teal"></span>PyMuPDF</div>
+      <div class="ld-tech-badge"><span class="ld-tech-dot ld-tech-dot--orange"></span>Tesseract OCR</div>
+      <div class="ld-tech-badge"><span class="ld-tech-dot ld-tech-dot--gray"></span>SQLite</div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="ld-about" class="ld-about">
+    <div class="ld-about-inner">
+      <div class="ld-about-text">
+        <div class="ld-section-tag">About</div>
+        <h2 class="ld-section-h2">Built for engineers who want to understand RAG, not just use it</h2>
+        <p>RAG Studio is an open-source, 100% local evaluation workbench for Retrieval-Augmented Generation pipelines. It was created because most RAG tools hide the internals — you feed them a document, they give you answers, and you have no idea whether cosine similarity or BM25 would have worked better, or whether a cross-encoder reranker actually helped your corpus.</p>
+        <p>Every component is swappable and every comparison is transparent. Upload a PDF, configure multiple pipelines with different loaders, chunkers, and embedding models, then query them side-by-side. The metrics, scores, and chunk text are always visible so you can build intuition about what really moves the needle.</p>
+        <p>Because everything runs locally, there are no API costs, no data privacy concerns, and no external dependencies after the initial model download. Your documents never leave your machine.</p>
+        <div class="ld-about-pills">
+          <span class="ld-pill ld-pill--purple">&#10003; MIT License</span>
+          <span class="ld-pill ld-pill--blue">&#10003; Zero cloud</span>
+          <span class="ld-pill ld-pill--green">&#10003; All local</span>
+          <span class="ld-pill ld-pill--amber">&#10003; No API keys</span>
+        </div>
+      </div>
+      <div class="ld-about-logo">
+        <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="60" cy="95" rx="44" ry="12" fill="#7C3AED" opacity="0.15"/>
+          <ellipse cx="60" cy="82" rx="44" ry="12" fill="#7C3AED" opacity="0.3"/>
+          <ellipse cx="60" cy="69" rx="44" ry="12" fill="#7C3AED" opacity="0.5"/>
+          <ellipse cx="60" cy="56" rx="44" ry="12" fill="#7C3AED" opacity="0.75"/>
+          <circle cx="56" cy="34" r="26" stroke="#A78BFA" stroke-width="4"/>
+          <circle cx="56" cy="34" r="14" fill="#1E1B4B" stroke="#6D28D9" stroke-width="2"/>
+          <circle cx="56" cy="34" r="7" fill="#7C3AED" opacity="0.8"/>
+          <line x1="76" y1="54" x2="96" y2="74" stroke="#A78BFA" stroke-width="5" stroke-linecap="round"/>
+        </svg>
+        <div class="ld-about-stats">
+          <div class="ld-astat"><span class="ld-astat-n">6</span><span class="ld-astat-l">Loaders</span></div>
+          <div class="ld-astat"><span class="ld-astat-n">6</span><span class="ld-astat-l">Splitters</span></div>
+          <div class="ld-astat"><span class="ld-astat-n">6</span><span class="ld-astat-l">Embedders</span></div>
+          <div class="ld-astat"><span class="ld-astat-n">7</span><span class="ld-astat-l">Search types</span></div>
+          <div class="ld-astat"><span class="ld-astat-n">4</span><span class="ld-astat-l">Rerankers</span></div>
+          <div class="ld-astat"><span class="ld-astat-n">&infin;</span><span class="ld-astat-l">Configs</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section id="ld-arch" class="ld-arch">
+    <div class="ld-section-hdr">
+      <div class="ld-section-tag">Architecture &amp; Composition</div>
+      <h2 class="ld-section-h2">How RAG Studio is built</h2>
+      <p class="ld-section-sub">A layered, modular design — every component is independently swappable via a central registry</p>
+    </div>
+
+    <!-- System Layer Diagram -->
+    <div class="ld-sys-stack">
+      <div class="ld-sys-layer ld-sys-layer--frontend">
+        <div class="ld-sys-layer-label">Frontend</div>
+        <div class="ld-sys-chips">
+          <span class="ld-sys-chip">Vanilla JS SPA</span>
+          <span class="ld-sys-chip">4-Tab UI</span>
+          <span class="ld-sys-chip">Dynamic Forms (from params_schema)</span>
+          <span class="ld-sys-chip">Live Polling (2s interval)</span>
+        </div>
+      </div>
+      <div class="ld-sys-connector">&#8597; HTTP / REST</div>
+      <div class="ld-sys-layer ld-sys-layer--api">
+        <div class="ld-sys-layer-label">API Layer — FastAPI</div>
+        <div class="ld-sys-chips">
+          <span class="ld-sys-chip">REST Endpoints</span>
+          <span class="ld-sys-chip">CORS Middleware</span>
+          <span class="ld-sys-chip">Host Guard (DNS-rebind protection)</span>
+          <span class="ld-sys-chip">PDF Magic-bytes Validation</span>
+          <span class="ld-sys-chip">Static File Server</span>
+        </div>
+      </div>
+      <div class="ld-sys-connector">&#8597;</div>
+      <div class="ld-sys-layer ld-sys-layer--service">
+        <div class="ld-sys-layer-label">Service Layer</div>
+        <div class="ld-sys-chips">
+          <span class="ld-sys-chip">Document Service (file I/O + SQLite)</span>
+          <span class="ld-sys-chip">Pipeline Service (background tasks)</span>
+          <span class="ld-sys-chip">Search Service (BM25 + ChromaDB + RRF)</span>
+        </div>
+      </div>
+      <div class="ld-sys-connector">&#8597;</div>
+      <div class="ld-sys-layer ld-sys-layer--core">
+        <div class="ld-sys-layer-label">Core Layer — Pipeline Orchestrator + Component Registry</div>
+        <div class="ld-sys-chips">
+          <span class="ld-sys-chip ld-sys-chip--loader">6 PDF Loaders</span>
+          <span class="ld-sys-chip ld-sys-chip--splitter">6 Text Splitters</span>
+          <span class="ld-sys-chip ld-sys-chip--embedder">6 HF Embedding Models</span>
+          <span class="ld-sys-chip ld-sys-chip--search">7 Search Strategies</span>
+          <span class="ld-sys-chip ld-sys-chip--rerank">4 Cross-Encoder Rerankers</span>
+        </div>
+      </div>
+      <div class="ld-sys-connector">&#8597;</div>
+      <div class="ld-sys-layer ld-sys-layer--data">
+        <div class="ld-sys-layer-label">Data Layer</div>
+        <div class="ld-sys-chips">
+          <span class="ld-sys-chip">ChromaDB — vector collections (persistent)</span>
+          <span class="ld-sys-chip">SQLite — pipeline &amp; chunk metadata</span>
+          <span class="ld-sys-chip">File System — PDF uploads</span>
+          <span class="ld-sys-chip">HF Model Cache — downloaded weights</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ld-arch-pipes">
+
+      <div class="ld-arch-pipe">
+        <div class="ld-arch-pipe-title">&#x1F4E5; Ingestion Pipeline — PDF &rarr; Vector Store</div>
+        <div class="ld-arch-flow">
+          <div class="ld-arch-node ld-arch-node--upload">
+            <div class="ld-arch-node-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <div class="ld-arch-node-name">PDF Upload</div>
+            <div class="ld-arch-node-desc">Magic-bytes validated</div>
+          </div>
+          <div class="ld-arch-arrow">&rarr;</div>
+          <div class="ld-arch-node ld-arch-node--loader">
+            <div class="ld-arch-node-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/></svg>
+            </div>
+            <div class="ld-arch-node-name">Loader</div>
+            <div class="ld-arch-node-desc">Text extraction / OCR</div>
+          </div>
+          <div class="ld-arch-arrow">&rarr;</div>
+          <div class="ld-arch-node ld-arch-node--splitter">
+            <div class="ld-arch-node-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            </div>
+            <div class="ld-arch-node-name">Splitter</div>
+            <div class="ld-arch-node-desc">Chunk size &amp; overlap</div>
+          </div>
+          <div class="ld-arch-arrow">&rarr;</div>
+          <div class="ld-arch-node ld-arch-node--embedder">
+            <div class="ld-arch-node-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M20 12h2M12 2v2M12 20v2M2 12h2"/></svg>
+            </div>
+            <div class="ld-arch-node-name">Embedder</div>
+            <div class="ld-arch-node-desc">HuggingFace local model</div>
+          </div>
+          <div class="ld-arch-arrow">&rarr;</div>
+          <div class="ld-arch-node ld-arch-node--store">
+            <div class="ld-arch-node-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            </div>
+            <div class="ld-arch-node-name">ChromaDB</div>
+            <div class="ld-arch-node-desc">Persistent collection</div>
+          </div>
+        </div>
+        <div class="ld-arch-pipe-note">Each pipeline config is hashed (SHA-256) into a unique collection name. Re-running the same config returns cached results instantly — no reprocessing.</div>
+      </div>
+
+      <div class="ld-arch-pipe">
+        <div class="ld-arch-pipe-title">&#x1F50D; Query Pipeline — Question &rarr; Ranked Results</div>
+        <div class="ld-arch-flow">
+          <div class="ld-arch-node ld-arch-node--query">
+            <div class="ld-arch-node-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div class="ld-arch-node-name">Query</div>
+            <div class="ld-arch-node-desc">Natural language</div>
+          </div>
+          <div class="ld-arch-arrow">&rarr;</div>
+          <div class="ld-arch-node ld-arch-node--embedder">
+            <div class="ld-arch-node-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M20 12h2M12 2v2M12 20v2M2 12h2"/></svg>
+            </div>
+            <div class="ld-arch-node-name">Dense + Sparse</div>
+            <div class="ld-arch-node-desc">Chroma vector &amp; BM25</div>
+          </div>
+          <div class="ld-arch-arrow">&rarr;</div>
+          <div class="ld-arch-node ld-arch-node--search">
+            <div class="ld-arch-node-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <div class="ld-arch-node-name">RRF Fusion</div>
+            <div class="ld-arch-node-desc">Hybrid merge (k=60)</div>
+          </div>
+          <div class="ld-arch-arrow">&rarr;</div>
+          <div class="ld-arch-node ld-arch-node--rerank">
+            <div class="ld-arch-node-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div class="ld-arch-node-name">Reranker</div>
+            <div class="ld-arch-node-desc">Cross-encoder (optional)</div>
+          </div>
+          <div class="ld-arch-arrow">&rarr;</div>
+          <div class="ld-arch-node ld-arch-node--results">
+            <div class="ld-arch-node-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            </div>
+            <div class="ld-arch-node-name">Results</div>
+            <div class="ld-arch-node-desc">Scored &amp; ranked chunks</div>
+          </div>
+        </div>
+        <div class="ld-arch-pipe-note">RRF formula: <code>score = 1/(60+rank_dense) + 1/(60+rank_sparse)</code> — documents ranking highly in both dense and sparse lists float to the top with no score normalization needed.</div>
+      </div>
+
+    </div>
+
+    <!-- Component Composition Grid -->
+    <div class="ld-comp-wrap">
+      <h3 class="ld-comp-section-title">Component Composition</h3>
+      <div class="ld-comp-grid">
+        <div class="ld-comp-card ld-comp-card--blue">
+          <div class="ld-comp-hdr">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            PDF Loaders (6)
+          </div>
+          <ul class="ld-comp-list">
+            <li><code>pypdf</code> — fast text-only extraction</li>
+            <li><code>pdfminer</code> — layout-aware parsing</li>
+            <li><code>pdfplumber</code> — table extraction</li>
+            <li><code>unstructured_fast</code> — LangChain fast mode</li>
+            <li><code>unstructured_hires</code> — 300 DPI PyMuPDF + OCR</li>
+            <li><code>unstructured_ocr</code> — 200 DPI Tesseract OCR</li>
+          </ul>
+        </div>
+        <div class="ld-comp-card ld-comp-card--green">
+          <div class="ld-comp-hdr">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            Text Splitters (6)
+          </div>
+          <ul class="ld-comp-list">
+            <li><code>recursive_character</code> — default, hierarchy-aware</li>
+            <li><code>character</code> — single separator</li>
+            <li><code>token</code> — tiktoken BPE-based</li>
+            <li><code>sentence_transformers_token</code> — model-aware</li>
+            <li><code>markdown_header</code> — structure-preserving</li>
+            <li><code>recursive_json</code> — JSON structure</li>
+          </ul>
+        </div>
+        <div class="ld-comp-card ld-comp-card--purple">
+          <div class="ld-comp-hdr">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M20 12h2M12 2v2M12 20v2M2 12h2"/></svg>
+            Embedding Models (6)
+          </div>
+          <ul class="ld-comp-list">
+            <li><code>all-MiniLM-L6-v2</code> — 384d, fast</li>
+            <li><code>all-MiniLM-L12-v2</code> — 384d, balanced</li>
+            <li><code>all-mpnet-base-v2</code> — 768d, quality</li>
+            <li><code>multi-qa-MiniLM-L6</code> — Q&amp;A tuned</li>
+            <li><code>paraphrase-multilingual</code> — 50+ languages</li>
+            <li><code>e5-small-v2</code> — E5 retrieval model</li>
+          </ul>
+        </div>
+        <div class="ld-comp-card ld-comp-card--amber">
+          <div class="ld-comp-hdr">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            Infrastructure
+          </div>
+          <ul class="ld-comp-list">
+            <li><b>FastAPI</b> — REST API + security layer</li>
+            <li><b>ChromaDB</b> — persistent vector store</li>
+            <li><b>SQLite</b> — pipeline &amp; chunk metadata</li>
+            <li><b>PyMuPDF</b> — high-DPI PDF rendering</li>
+            <li><b>Tesseract</b> — OCR text recognition</li>
+            <li><b>rank_bm25</b> — BM25Okapi sparse retrieval</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- MODELS CONFIG -->
+  <section id="ld-config" class="ld-config">
+    <div class="ld-section-hdr">
+      <div class="ld-section-tag">Models &amp; Configuration</div>
+      <h2 class="ld-section-h2">Every component is swappable</h2>
+      <p class="ld-section-sub">All models run locally via HuggingFace — downloaded on first use, then cached for offline operation</p>
+    </div>
+
+    <h3 class="ld-config-subhdr">Embedding Models</h3>
+    <div class="ld-model-grid">
+      <div class="ld-model-card">
+        <div class="ld-model-hdr"><span class="ld-model-name">all-MiniLM-L6-v2</span><span class="ld-model-badge ld-badge--fast">Fast</span></div>
+        <div class="ld-model-dims">384 dims</div>
+        <p class="ld-model-desc">The go-to general-purpose model. Excellent speed/quality tradeoff for English corpora.</p>
+        <div class="ld-feat-tags"><span>Sentence-BERT</span><span>English</span></div>
+      </div>
+      <div class="ld-model-card">
+        <div class="ld-model-hdr"><span class="ld-model-name">all-MiniLM-L12-v2</span><span class="ld-model-badge ld-badge--balanced">Balanced</span></div>
+        <div class="ld-model-dims">384 dims</div>
+        <p class="ld-model-desc">Deeper 12-layer variant of MiniLM. Better recall at moderate speed cost.</p>
+        <div class="ld-feat-tags"><span>Sentence-BERT</span><span>English</span></div>
+      </div>
+      <div class="ld-model-card">
+        <div class="ld-model-hdr"><span class="ld-model-name">all-mpnet-base-v2</span><span class="ld-model-badge ld-badge--quality">Quality</span></div>
+        <div class="ld-model-dims">768 dims</div>
+        <p class="ld-model-desc">Top-performing general model on STS benchmarks. Slower but highest semantic accuracy.</p>
+        <div class="ld-feat-tags"><span>MPNet</span><span>English</span></div>
+      </div>
+      <div class="ld-model-card">
+        <div class="ld-model-hdr"><span class="ld-model-name">multi-qa-MiniLM-L6-cos-v1</span><span class="ld-model-badge ld-badge--fast">Fast</span></div>
+        <div class="ld-model-dims">384 dims</div>
+        <p class="ld-model-desc">Fine-tuned for question-answering retrieval tasks — asymmetric Q&amp;A pairs.</p>
+        <div class="ld-feat-tags"><span>Q&amp;A tuned</span><span>Cosine</span></div>
+      </div>
+      <div class="ld-model-card">
+        <div class="ld-model-hdr"><span class="ld-model-name">paraphrase-multilingual-MiniLM-L12-v2</span><span class="ld-model-badge ld-badge--multi">Multilingual</span></div>
+        <div class="ld-model-dims">384 dims</div>
+        <p class="ld-model-desc">Supports 50+ languages. Use when documents or queries are non-English.</p>
+        <div class="ld-feat-tags"><span>50+ languages</span><span>Paraphrase</span></div>
+      </div>
+      <div class="ld-model-card">
+        <div class="ld-model-hdr"><span class="ld-model-name">e5-small-v2</span><span class="ld-model-badge ld-badge--fast">Fast</span></div>
+        <div class="ld-model-dims">384 dims</div>
+        <p class="ld-model-desc">Microsoft's E5 small — strong retrieval performance, designed with query/passage prefixes.</p>
+        <div class="ld-feat-tags"><span>E5 family</span><span>Retrieval</span></div>
+      </div>
+    </div>
+
+    <h3 class="ld-config-subhdr" style="margin-top:3rem">Reranking Models</h3>
+    <div class="ld-rerank-grid">
+      <div class="ld-rerank-card ld-rerank-card--none">
+        <div class="ld-rerank-name">No Reranking</div>
+        <p class="ld-rerank-desc">Use initial vector similarity scores. Fastest option — best when embeddings are well-suited to the query.</p>
+      </div>
+      <div class="ld-rerank-card">
+        <div class="ld-rerank-name">TinyBERT</div>
+        <div class="ld-rerank-model">cross-encoder/ms-marco-TinyBERT-L-2-v2</div>
+        <p class="ld-rerank-desc">Smallest cross-encoder. Near-instant reranking with meaningful precision gains over pure vector search.</p>
+      </div>
+      <div class="ld-rerank-card">
+        <div class="ld-rerank-name">MiniLM-L6</div>
+        <div class="ld-rerank-model">cross-encoder/ms-marco-MiniLM-L-6-v2</div>
+        <p class="ld-rerank-desc">Best tradeoff for most use cases. 6-layer cross-encoder, fast and accurate on passage ranking.</p>
+      </div>
+      <div class="ld-rerank-card">
+        <div class="ld-rerank-name">MiniLM-L12</div>
+        <div class="ld-rerank-model">cross-encoder/ms-marco-MiniLM-L-12-v2</div>
+        <p class="ld-rerank-desc">12-layer variant for higher accuracy. Recommended when recall matters more than speed.</p>
+      </div>
+      <div class="ld-rerank-card">
+        <div class="ld-rerank-name">BGE Base</div>
+        <div class="ld-rerank-model">BAAI/bge-reranker-base</div>
+        <p class="ld-rerank-desc">BAAI's BGE reranker — strong multilingual support and excellent ranking on diverse corpora.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEARCH METHODS -->
+  <section id="ld-search" class="ld-search-section">
+    <div class="ld-section-hdr">
+      <div class="ld-section-tag">Search Methods</div>
+      <h2 class="ld-section-h2">7 retrieval strategies, side-by-side</h2>
+      <p class="ld-section-sub">Dense, sparse, and hybrid — compare them on your actual corpus to find what works</p>
+    </div>
+    <div class="ld-search-grid">
+      <div class="ld-search-card ld-search-card--dense">
+        <div class="ld-search-type">Dense</div>
+        <div class="ld-search-name">Cosine Similarity</div>
+        <p class="ld-search-desc">Default. Measures angle between query and document vectors. Best for semantically rich text where absolute magnitude is irrelevant.</p>
+      </div>
+      <div class="ld-search-card ld-search-card--dense">
+        <div class="ld-search-type">Dense</div>
+        <div class="ld-search-name">L2 Distance</div>
+        <p class="ld-search-desc">Euclidean distance in embedding space. Sensitive to vector magnitude — useful when embedding norms carry signal.</p>
+      </div>
+      <div class="ld-search-card ld-search-card--dense">
+        <div class="ld-search-type">Dense</div>
+        <div class="ld-search-name">Dot Product</div>
+        <p class="ld-search-desc">Raw inner product. Fastest similarity; works well when vectors are unit-normalized by the model.</p>
+      </div>
+      <div class="ld-search-card ld-search-card--sparse">
+        <div class="ld-search-type">Sparse</div>
+        <div class="ld-search-name">BM25 Keyword</div>
+        <p class="ld-search-desc">Classic TF-IDF variant. Excels on exact keyword matches, technical terms, codes, and named entities that embeddings may miss.</p>
+      </div>
+      <div class="ld-search-card ld-search-card--hybrid">
+        <div class="ld-search-type">Hybrid RRF</div>
+        <div class="ld-search-name">Cosine + BM25</div>
+        <p class="ld-search-desc">Reciprocal Rank Fusion of cosine and BM25 result lists. Captures both semantic intent and keyword precision.</p>
+      </div>
+      <div class="ld-search-card ld-search-card--hybrid">
+        <div class="ld-search-type">Hybrid RRF</div>
+        <div class="ld-search-name">L2 + BM25</div>
+        <p class="ld-search-desc">RRF fusion using L2 distance for the dense leg. Often outperforms cosine on models without explicit normalization.</p>
+      </div>
+      <div class="ld-search-card ld-search-card--hybrid">
+        <div class="ld-search-type">Hybrid RRF</div>
+        <div class="ld-search-name">Dot Product + BM25</div>
+        <p class="ld-search-desc">RRF fusion using dot product dense search. Try this when the embedding model uses dot-product as its native metric.</p>
+      </div>
+    </div>
+    <div class="ld-rrf-box">
+      <div class="ld-rrf-title">How Reciprocal Rank Fusion works</div>
+      <p class="ld-rrf-desc">RRF fuses two ranked result lists without needing score normalisation. Each document gets a score of <code>1 / (k + rank)</code> from each list (k=60 by default), and the scores are summed. Documents that rank highly in both lists float to the top; documents absent from one list still get a partial score if they rank well in the other. This makes hybrid search robust to the scale differences between cosine scores and BM25 term weights.</p>
+    </div>
+  </section>
+
+  <!-- HOW TO USE -->
+  <section id="ld-how-to-use" class="ld-use">
+    <div class="ld-section-hdr">
+      <div class="ld-section-tag">How to Use</div>
+      <h2 class="ld-section-h2">Get started in 5 minutes</h2>
+      <p class="ld-section-sub">From starting the server to comparing RAG configurations — the complete step-by-step workflow</p>
+    </div>
+    <div class="ld-use-steps">
+
+      <div class="ld-use-step">
+        <div class="ld-use-step-num">01</div>
+        <div class="ld-use-step-body">
+          <h3>Start the server</h3>
+          <p>Activate your virtual environment and start the FastAPI server. Always use <code>--workers 1</code> — ChromaDB PersistentClient is single-process only.</p>
+          <div class="ld-use-code">.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 1</div>
+        </div>
+      </div>
+
+      <div class="ld-use-step">
+        <div class="ld-use-step-num">02</div>
+        <div class="ld-use-step-body">
+          <h3>Open in browser</h3>
+          <p>Navigate to <code>http://localhost:8000</code>. You'll see this landing page. Click <strong>Launch App</strong> (top-right or footer) to open the pipeline studio. The app is localhost-only by design — the Host Guard middleware blocks all other origins.</p>
+        </div>
+      </div>
+
+      <div class="ld-use-step">
+        <div class="ld-use-step-num">03</div>
+        <div class="ld-use-step-body">
+          <h3>Upload a PDF document</h3>
+          <p>In the <strong>Documents</strong> tab, drag-and-drop any PDF or click "browse files". Files are validated via magic-bytes before storage. Scanned PDFs (no selectable text) are supported — the OCR loaders handle them automatically via PyMuPDF + Tesseract.</p>
+        </div>
+      </div>
+
+      <div class="ld-use-step">
+        <div class="ld-use-step-num">04</div>
+        <div class="ld-use-step-body">
+          <h3>Configure pipeline components</h3>
+          <p>Go to <strong>Pipeline Studio</strong>. Select your document, then choose a <strong>Loader</strong>, a <strong>Splitter</strong> (with chunk size / overlap), and an <strong>Embedding Model</strong>. Each component shows its configurable parameters dynamically. Add up to <strong>4 different configurations</strong> to the Comparison Basket.</p>
+          <div class="ld-use-tip">Tip: Start with <code>pypdf + recursive_character (500/50) + all-MiniLM-L6-v2</code> as a baseline, then vary one component at a time to isolate impact.</div>
+        </div>
+      </div>
+
+      <div class="ld-use-step">
+        <div class="ld-use-step-num">05</div>
+        <div class="ld-use-step-body">
+          <h3>Run pipelines &amp; watch the step log</h3>
+          <p>Click <strong>Run All</strong> to process all basket configurations in parallel. Each pipeline card shows a live step log: Loading &rarr; Splitting &rarr; Embedding &rarr; Storing — with per-step timing and chunk counts. Completed pipelines cache their ChromaDB collection for instant reuse.</p>
+          <div class="ld-use-tip">Tip: The <strong>Run History</strong> tab shows all past runs. You can expand any row to inspect individual chunks.</div>
+        </div>
+      </div>
+
+      <div class="ld-use-step">
+        <div class="ld-use-step-num">06</div>
+        <div class="ld-use-step-body">
+          <h3>Search, rerank &amp; compare</h3>
+          <p>In <strong>Search &amp; Evaluate</strong>, select one or more pipelines, type a natural language question, pick a search method (dense / sparse / hybrid RRF), optionally apply a cross-encoder reranker, and click Search. Results appear side-by-side with similarity scores and chunk text. Use <strong>Pin</strong> to freeze one result set and compare it against a second query/config.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS INTERNALLY -->
+  <section id="ld-internals" class="ld-internals">
+    <div class="ld-section-hdr">
+      <div class="ld-section-tag">Under the Hood</div>
+      <h2 class="ld-section-h2">How this application works</h2>
+      <p class="ld-section-sub">The technical mechanics that make RAG Studio fast, reliable, and reproducible</p>
+    </div>
+    <div class="ld-internals-grid">
+
+      <div class="ld-internal-card">
+        <div class="ld-internal-icon ld-internal-icon--purple">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h3>Idempotent Pipeline Hashing</h3>
+        <p>Every pipeline (loader + splitter + embedder + doc_id) is deterministically hashed with SHA-256 into a unique ChromaDB collection name. Re-running the exact same configuration skips all reprocessing and returns the cached collection instantly. Benchmarking is cheap — you only pay compute cost once per unique config.</p>
+      </div>
+
+      <div class="ld-internal-card">
+        <div class="ld-internal-icon ld-internal-icon--blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h3>Hybrid Retrieval with RRF</h3>
+        <p>For hybrid search, RAG Studio runs two systems simultaneously: ChromaDB for dense vector similarity and BM25Okapi (built in-memory from chunk text) for keyword sparse retrieval. The two ranked lists are fused with Reciprocal Rank Fusion: <code>score = 1/(60+rank_dense) + 1/(60+rank_sparse)</code>. The constant k=60 makes fusion robust to outliers — no score normalization required.</p>
+      </div>
+
+      <div class="ld-internal-card">
+        <div class="ld-internal-icon ld-internal-icon--green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        </div>
+        <h3>Component Registry &amp; Auto-UI</h3>
+        <p>All loaders, splitters, and embedders self-register via Python decorators (<code>@ComponentRegistry.register_loader</code>) on import. Each component exposes a <code>params_schema()</code> class method that drives the dynamic UI forms — adding a new component requires only writing the class. The UI adapts automatically with no frontend changes needed.</p>
+      </div>
+
+      <div class="ld-internal-card">
+        <div class="ld-internal-icon ld-internal-icon--amber">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M20 12h2M12 2v2M12 20v2M2 12h2M5.34 18.66l-1.41 1.41M18.66 5.34l1.41-1.41M5.34 5.34 3.93 3.93"/></svg>
+        </div>
+        <h3>Cross-Encoder Reranking</h3>
+        <p>After initial retrieval, a cross-encoder re-reads the query and each candidate chunk together to produce a more precise relevance score. Unlike bi-encoders that encode query and passage independently, cross-encoders see both at once — capturing fine-grained interaction signals. Tradeoff: slower per query (k forward passes) but significantly higher precision when needed.</p>
+      </div>
+
+      <div class="ld-internal-card">
+        <div class="ld-internal-icon ld-internal-icon--red">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        </div>
+        <h3>Auto-OCR Fallback</h3>
+        <p>When text-based loaders return empty content (scanned PDF), the system falls back to PyMuPDF rendering: each page is rasterized to a high-DPI PNG (200–300 DPI, configurable), then Tesseract OCR extracts text character-by-character. No poppler dependency — PyMuPDF handles all PDF-to-image conversion, so Tesseract is the only external binary required.</p>
+      </div>
+
+      <div class="ld-internal-card">
+        <div class="ld-internal-icon ld-internal-icon--teal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <h3>Real-time Step Log</h3>
+        <p>Pipeline execution runs in FastAPI BackgroundTasks. Each step writes its status and timing to a SQLite JSON step-log column. The frontend polls <code>GET /api/pipelines/{id}</code> every 2 seconds and renders live progress. An in-memory ring-buffer handler (last 500 records) also feeds the server Logs panel for diagnostics.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WHO CAN USE -->
+  <section id="ld-who" class="ld-who">
+    <div class="ld-section-hdr">
+      <div class="ld-section-tag">Who Can Use This</div>
+      <h2 class="ld-section-h2">Built for the whole ML team</h2>
+      <p class="ld-section-sub">From researchers benchmarking embeddings to developers shipping RAG-powered products</p>
+    </div>
+    <div class="ld-who-grid">
+
+      <div class="ld-who-card ld-who-card--purple">
+        <div class="ld-who-icon ld-who-icon--purple">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M5.34 18.66l-1.41 1.41M20 12h2M2 12h2M17.66 18.66l1.41 1.41M6.34 5.34 4.93 4.93M12 20v2M12 2v2"/></svg>
+        </div>
+        <h3>ML Engineers</h3>
+        <p>Benchmark retrieval strategies systematically before committing to a production pipeline. Run dozens of configurations in parallel, compare precision side-by-side, and make data-driven decisions — not gut-feel guesses.</p>
+        <div class="ld-who-tags">
+          <span class="ld-who-tag ld-who-tag--purple">Pipeline benchmarking</span>
+          <span class="ld-who-tag ld-who-tag--purple">A/B config testing</span>
+          <span class="ld-who-tag ld-who-tag--purple">Production evaluation</span>
+        </div>
+      </div>
+
+      <div class="ld-who-card ld-who-card--blue">
+        <div class="ld-who-icon ld-who-icon--blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <h3>Researchers</h3>
+        <p>Compare embedding models and chunking strategies on your specific corpus. All similarity scores, chunk boundaries, and metadata are fully visible. Use strategy compare mode to test all 7 search methods on the same query simultaneously.</p>
+        <div class="ld-who-tags">
+          <span class="ld-who-tag ld-who-tag--blue">Embedding comparison</span>
+          <span class="ld-who-tag ld-who-tag--blue">Chunking strategies</span>
+          <span class="ld-who-tag ld-who-tag--blue">Reproducible experiments</span>
+        </div>
+      </div>
+
+      <div class="ld-who-card ld-who-card--green">
+        <div class="ld-who-icon ld-who-icon--green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <h3>Data Scientists</h3>
+        <p>Understand how your documents are being retrieved before building downstream LLM pipelines. Inspect individual chunks, verify that critical passages are captured, and diagnose retrieval failures — all without writing a single line of code.</p>
+        <div class="ld-who-tags">
+          <span class="ld-who-tag ld-who-tag--green">Document inspection</span>
+          <span class="ld-who-tag ld-who-tag--green">Retrieval debugging</span>
+          <span class="ld-who-tag ld-who-tag--green">No-code exploration</span>
+        </div>
+      </div>
+
+      <div class="ld-who-card ld-who-card--amber">
+        <div class="ld-who-icon ld-who-icon--amber">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <h3>Developers</h3>
+        <p>Prototype the retrieval layer of your RAG application. Find the optimal loader/splitter/embedder combination for your document type, then replicate that exact configuration in production using the same open-source libraries: LangChain, ChromaDB, HuggingFace.</p>
+        <div class="ld-who-tags">
+          <span class="ld-who-tag ld-who-tag--amber">Rapid prototyping</span>
+          <span class="ld-who-tag ld-who-tag--amber">Config discovery</span>
+          <span class="ld-who-tag ld-who-tag--amber">Local-first dev</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="ld-footer">
+    <div class="ld-footer-logo">
+      <svg viewBox="0 0 28 28" fill="none" width="22" height="22">
+        <ellipse cx="14" cy="22" rx="10" ry="2.8" fill="#7C3AED" opacity="0.25"/>
+        <ellipse cx="14" cy="18" rx="10" ry="2.8" fill="#7C3AED" opacity="0.5"/>
+        <ellipse cx="14" cy="14" rx="10" ry="2.8" fill="#7C3AED" opacity="0.8"/>
+        <circle cx="13" cy="9" r="5.5" stroke="#A78BFA" stroke-width="1.8"/>
+        <line x1="17" y1="13" x2="21" y2="17" stroke="#A78BFA" stroke-width="1.8" stroke-linecap="round"/>
+        <circle cx="13" cy="9" r="2" fill="#A78BFA"/>
+      </svg>
+      RAG Studio
+    </div>
+    <p class="ld-footer-copy">&copy; 2025 RAG Studio &mdash; Local RAG evaluation for everyone</p>
+    <button class="ld-btn-signin js-open-login" style="margin-top:1.5rem">Launch App &rarr;</button>
+  </footer>
+
+</div><!-- /landing -->
+
+<!-- ═══════════════════════ APP SHELL ═══════════════════════ -->
+<div id="appShell" class="app-shell" style="display:none">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <span class="brand-name">RAG Studio</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-view="upload">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        <span>Documents</span>
+        <span class="nav-badge" id="docCountBadge" style="display:none">0</span>
+      </button>
+      <button class="nav-item" data-view="pipeline">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M5.34 18.66l-1.41 1.41M20 12h2M2 12h2M17.66 18.66l1.41 1.41M6.34 5.34 4.93 4.93M12 20v2M12 2v2"/></svg>
+        <span>Pipeline Studio</span>
+      </button>
+      <button class="nav-item" data-view="history">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <span>Run History</span>
+        <span class="nav-badge" id="runCountBadge" style="display:none">0</span>
+      </button>
+      <button class="nav-item" data-view="search">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span>Search &amp; Evaluate</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="server-status">
+        <span class="status-dot" id="serverDot"></span>
+        <span class="status-text" id="serverStatus">Connecting...</span>
+      </div>
+      <button id="signOutBtn" class="sidebar-signout" title="Back to home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Back to Home
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-wrapper">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="sidebar-toggle" id="sidebarToggle" title="Toggle sidebar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="breadcrumb" id="breadcrumb">
+          <span class="bc-home">RAG Studio</span>
+          <svg class="bc-sep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          <span class="bc-page" id="bcPage">Documents</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="topbar-home-btn" id="topbarHomeBtn" title="Return to landing page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Home
+        </button>
+        <button class="icon-btn" id="refreshBtn" title="Refresh">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="content-area">
+
+      <!-- VIEW: Documents -->
+      <div class="view active" id="view-upload">
+        <div class="view-header">
+          <h1>Documents</h1>
+          <p class="view-subtitle">Upload PDFs to build RAG pipelines</p>
+        </div>
+        <div class="drop-zone" id="dropZone">
+          <div class="drop-zone-inner">
+            <div class="drop-icon">
+              <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M32 44V24M22 34l10-10 10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="drop-text">
+              <p class="drop-main">Drop your PDF here</p>
+              <p class="drop-sub">or <label class="link-btn" for="fileInput">browse files</label> &middot; max 50MB</p>
+            </div>
+          </div>
+          <input type="file" id="fileInput" accept=".pdf" hidden/>
+        </div>
+        <div id="uploadFeedback"></div>
+        <div class="section-header">
+          <h2>Your Documents</h2>
+          <div class="section-actions">
+            <button class="btn btn-ghost btn-sm" id="refreshDocs">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Refresh
+            </button>
+          </div>
+        </div>
+        <div id="docGrid" class="doc-grid"></div>
+      </div>
+
+      <!-- VIEW: Pipeline Studio -->
+      <div class="view hidden" id="view-pipeline">
+        <div class="view-header">
+          <h1>Pipeline Studio</h1>
+          <p class="view-subtitle">Configure, compare, and run up to 4 pipeline configurations</p>
+        </div>
+        <div class="pipeline-studio-layout">
+          <div class="studio-config-panel">
+            <div class="panel-card">
+              <div class="panel-card-header">
+                <span class="panel-card-title">Configuration</span>
+              </div>
+              <div class="panel-card-body">
+                <div class="form-field">
+                  <label class="field-label">Document</label>
+                  <select id="studioDocSelect" class="field-input">
+                    <option value="">— select a document —</option>
+                  </select>
+                </div>
+                <div class="pipeline-flow">
+                  <div class="flow-node flow-node--loader">
+                    <div class="flow-node-label">LOADER</div>
+                    <select id="loaderSelect" class="field-input flow-select"></select>
+                    <div id="loaderParams" class="flow-params"></div>
+                  </div>
+                  <div class="flow-arrow">
+                    <svg viewBox="0 0 40 24" fill="none"><path d="M0 12h36M28 4l8 8-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="flow-arrow-label">extract</span>
+                  </div>
+                  <div class="flow-node flow-node--splitter">
+                    <div class="flow-node-label">SPLITTER</div>
+                    <select id="splitterSelect" class="field-input flow-select"></select>
+                    <div id="splitterParams" class="flow-params"></div>
+                  </div>
+                  <div class="flow-arrow">
+                    <svg viewBox="0 0 40 24" fill="none"><path d="M0 12h36M28 4l8 8-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span class="flow-arrow-label">chunk</span>
+                  </div>
+                  <div class="flow-node flow-node--embedder">
+                    <div class="flow-node-label">EMBEDDER</div>
+                    <select id="embedderSelect" class="field-input flow-select"></select>
+                    <div id="embedderInfo" class="embedder-info"></div>
+                  </div>
+                </div>
+                <button class="btn btn-primary btn-full" id="addToBasketBtn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  Add to Basket
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="studio-results-panel">
+            <div class="panel-card">
+              <div class="panel-card-header">
+                <span class="panel-card-title">Comparison Basket</span>
+                <span class="chip" id="basketChip">0 / 4</span>
+              </div>
+              <div class="panel-card-body">
+                <div id="basketList" class="basket-list"></div>
+                <div class="basket-actions">
+                  <button class="btn btn-success" id="runAllBtn" disabled>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    Run All
+                  </button>
+                  <button class="btn btn-ghost btn-sm" id="clearBasketBtn">Clear</button>
+                </div>
+              </div>
+            </div>
+            <div id="runResultsArea"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW: Run History -->
+      <div class="view hidden" id="view-history">
+        <div class="view-header">
+          <h1>Run History</h1>
+          <p class="view-subtitle">All pipeline runs and their results</p>
+        </div>
+        <div class="history-toolbar">
+          <select id="historyDocFilter" class="field-input" style="width:260px">
+            <option value="">All documents</option>
+          </select>
+          <button class="btn btn-ghost btn-sm" id="refreshHistory">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            Refresh
+          </button>
+        </div>
+        <div id="historyTable" class="history-table"></div>
+      </div>
+
+      <!-- VIEW: Search & Evaluate -->
+      <div class="view hidden" id="view-search">
+        <div class="view-header">
+          <h1>Search &amp; Evaluate</h1>
+          <p class="view-subtitle">Query pipelines and compare retrieval quality with eval metrics</p>
+        </div>
+        <div class="search-layout">
+          <div class="search-sidebar">
+            <div class="panel-card">
+              <div class="panel-card-header">
+                <span class="panel-card-title">Compare Mode</span>
+              </div>
+              <div class="panel-card-body" style="padding:10px 14px">
+                <div class="mode-toggle" id="searchModeToggle">
+                  <button class="mode-btn active" data-mode="pipelines">Pipelines</button>
+                  <button class="mode-btn" data-mode="strategies">Strategies</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pipelines panel -->
+            <div class="panel-card" id="pipelinesPanel">
+              <div class="panel-card-header">
+                <span class="panel-card-title">Select Pipelines</span>
+                <span class="chip" id="selectedPipelineChip">0 selected</span>
+              </div>
+              <div class="panel-card-body" style="padding:0">
+                <div class="form-field" style="padding:12px 16px 0">
+                  <select id="searchDocFilter" class="field-input">
+                    <option value="">All documents</option>
+                  </select>
+                </div>
+                <div id="pipelineChecklist" class="pipeline-checklist"></div>
+              </div>
+            </div>
+
+            <!-- Strategies panel -->
+            <div class="panel-card hidden" id="strategiesPanel">
+              <div class="panel-card-header">
+                <span class="panel-card-title">Select Pipeline</span>
+              </div>
+              <div class="panel-card-body" style="padding:0">
+                <div id="strategyPipelineList" class="pipeline-checklist"></div>
+              </div>
+              <div class="panel-card-header" style="border-top:1px solid var(--border1)">
+                <span class="panel-card-title">Search Strategies</span>
+              </div>
+              <div class="panel-card-body" style="padding:10px 14px">
+                <div id="strategyChecklist" class="strategy-checklist"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="search-main">
+            <div class="search-query-bar">
+              <div class="query-input-wrap">
+                <svg class="query-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="queryInput" class="query-input" placeholder="Ask a question about your documents..."/>
+              </div>
+              <div class="query-controls">
+                <div class="k-control">
+                  <label>Top-K</label>
+                  <input type="number" id="kInput" value="5" min="1" max="20"/>
+                </div>
+                <div class="k-control" id="searchTypeWrap">
+                  <label>Method</label>
+                  <select id="searchTypeSelect" class="field-input" style="font-size:11px;padding:4px 6px">
+                    <option value="cosine">Cosine</option>
+                    <option value="l2">L2 Distance</option>
+                    <option value="dot_product">Dot Product</option>
+                    <option value="bm25">BM25</option>
+                    <option value="cosine+bm25">Cosine + BM25</option>
+                    <option value="l2+bm25">L2 + BM25</option>
+                    <option value="dot_product+bm25">Dot Product + BM25</option>
+                  </select>
+                </div>
+                <div class="k-control">
+                  <label>Reranker</label>
+                  <select id="rerankerSelect" class="field-input" style="font-size:11px;padding:4px 6px">
+                    <option value="none">None</option>
+                  </select>
+                </div>
+                <button class="btn btn-primary" id="searchBtn">Search</button>
+              </div>
+            </div>
+            <div id="pinnedBar" class="pinned-bar hidden"></div>
+            <div id="evalPanel" class="eval-panel hidden"></div>
+            <div id="compareGrid" class="compare-grid"></div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- MODAL: PDF Viewer -->
+<div class="modal-overlay hidden" id="pdfModal">
+  <div class="modal modal--pdf">
+    <div class="modal-header">
+      <div class="modal-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span id="pdfModalTitle">Document</span>
+      </div>
+      <button class="modal-close" id="pdfModalClose">&times;</button>
+    </div>
+    <div class="modal-body modal-body--pdf">
+      <iframe id="pdfFrame" src="" title="PDF Viewer"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Chunk Viewer -->
+<div class="modal-overlay hidden" id="chunkModal">
+  <div class="modal modal--chunks">
+    <div class="modal-header">
+      <div class="modal-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="9" x2="9" y2="21"/></svg>
+        <span id="chunkModalTitle">Chunks</span>
+      </div>
+      <div class="modal-header-actions">
+        <div class="chunk-search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="chunkSearch" placeholder="Search within chunks..."/>
+        </div>
+        <button class="modal-close" id="chunkModalClose">&times;</button>
+      </div>
+    </div>
+    <div class="chunk-modal-meta" id="chunkModalMeta"></div>
+    <div class="modal-body" id="chunkList"></div>
+    <div class="modal-footer">
+      <div class="pagination" id="chunkPagination"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Embedding Viewer -->
+<div class="modal-overlay hidden" id="embModal">
+  <div class="modal modal--emb">
+    <div class="modal-header">
+      <div class="modal-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        <span id="embModalTitle">Embedding Vectors</span>
+      </div>
+      <div class="modal-header-actions">
+        <div class="emb-limit-wrap">
+          <label>Show</label>
+          <select id="embLimitSelect"><option value="10">10</option><option value="20" selected>20</option><option value="50">50</option></select>
+          <label>vectors</label>
+        </div>
+        <button class="modal-close" id="embModalClose">&times;</button>
+      </div>
+    </div>
+    <div class="modal-body" id="embList"></div>
+  </div>
+</div><!-- /appShell -->
+
+<script src="/static/js/auth.js?v=13"></script>
+<script src="/static/js/logger.js?v=12"></script>
+<script src="/static/js/api.js?v=12"></script>
+<script src="/static/js/upload.js?v=12"></script>
+<script src="/static/js/pipeline.js?v=12"></script>
+<script src="/static/js/search.js?v=12"></script>
+<script src="/static/js/app.js?v=12"></script>
+</body>
+</html>
+
