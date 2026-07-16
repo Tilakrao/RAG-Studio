@@ -16,8 +16,11 @@ from app.api.pipelines import router as pipelines_router
 from app.api.search import router as search_router
 from app.api.logs import router as logs_router, attach_buffer_handler
 
-# Allowed Host values — prevents DNS rebinding (attacker maps evil.com → 127.0.0.1)
-_ALLOWED_HOSTS = {"localhost", "127.0.0.1"}
+# Detect if we are running in Vercel or a serverless cloud environment
+IS_SERVERLESS = os.environ.get("VERCEL") == "1" or os.environ.get("ENVIRONMENT") == "production"
+
+# For local development, prevent DNS rebinding. In production, we must allow Vercel hostnames.
+_ALLOWED_HOST_SUFFIXES = (".vercel.app", ".now.sh")
 
 
 def _configure_tesseract() -> None:
@@ -43,62 +46,93 @@ def _configure_tesseract() -> None:
 async def lifespan(app: FastAPI):
     settings = get_settings()
     attach_buffer_handler()
-    log_file = str(settings.data_dir / "rag_studio.log")
+    
+    # Resolve paths based on environment to avoid Read-Only Filesystem errors
+    if IS_SERVERLESS:
+        # Route logs to stdout and DB/data to /tmp (ephemeral scratchpad)
+        log_file = None  # Setup logging to write to console stdout/stderr instead of disk
+        db_path = "/tmp/rag_studio.db"
+    else:
+        log_file = str(settings.data_dir / "rag_studio.log")
+        db_path = str(settings.db_path)
+
     setup_logging(settings.log_level, settings.log_format, log_file=log_file)
-    os.environ["LOG_FILE"] = log_file
-    os.environ["HF_HOME"] = str(settings.hf_home)
+    
+    if log_file:
+        os.environ["LOG_FILE"] = log_file
+
+    os.environ["HF_HOME"] = "/tmp/hf_home" if IS_SERVERLESS else str(settings.hf_home)
+    
     if settings.transformers_offline != "0":
         os.environ["TRANSFORMERS_OFFLINE"] = settings.transformers_offline
+        
     _configure_tesseract()
-    settings.ensure_dirs()
-    init_db(str(settings.db_path))
+    
+    if not IS_SERVERLESS:
+        settings.ensure_dirs()
+        
+    # Warn developer if they are relying on SQLite in serverless
+    if IS_SERVERLESS and db_path.endswith(".db"):
+        logging.getLogger(__name__).warning(
+            "Running with ephemeral local SQLite database in serverless environment! "
+            "Data will be wiped on cold starts."
+        )
+        
+    init_db(db_path)
+    
     try:
         get_registry()
     except Exception as e:
         logging.getLogger(__name__).error("Component registration failed: %s", e)
-    logging.getLogger(__name__).info(
-        "RAG Studio started — data_dir=%s log=%s", settings.data_dir, log_file
-    )
+        
+    logging.getLogger(__name__).info("RAG Studio started — environment handles loaded")
     yield
     logging.getLogger(__name__).info("RAG Studio shutting down")
 
 
 app = FastAPI(title="RAG Studio", version="1.0.0", lifespan=lifespan)
 
-# ── Security middleware ───────────────────────────────────────────────────────
+# ── Dynamic CORS Config ───────────────────────────────────────────────────────
 
-# CORS: only allow requests from the local server itself.
-# This blocks cross-origin fetch attempts from malicious websites.
+cors_origins = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+]
+if IS_SERVERLESS:
+    # Allow wildcard or your production front-end URL here
+    cors_origins.append("*") 
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:8000",
-        "http://127.0.0.1:8000",
-    ],
+    allow_origins=cors_origins,
     allow_credentials=False,
     allow_methods=["GET", "POST", "DELETE"],
     allow_headers=["Content-Type"],
 )
 
+# ── Host Guard Middleware (Modified) ──────────────────────────────────────────
 
 @app.middleware("http")
 async def host_guard(request: Request, call_next):
-    """Reject requests whose Host header is not localhost/127.0.0.1.
-
-    Prevents DNS-rebinding attacks: a malicious page changes DNS so
-    'evil.com' resolves to 127.0.0.1, but the Host header still carries
-    'evil.com' — this middleware blocks it at HTTP level.
-    """
+    """Host protection: strict on localhost, allows Vercel domain patterns in production."""
     host = request.headers.get("host", "").split(":")[0]
-    if host not in _ALLOWED_HOSTS:
-        logging.getLogger(__name__).warning(
-            "Blocked request with unexpected Host header: %r", host
-        )
-        return JSONResponse(
-            status_code=421,
-            content={"detail": "Misdirected request — only localhost access is allowed"},
-        )
-    return await call_next(request)
+    
+    # 1. Always allow local addresses
+    if host in {"localhost", "127.0.0.1"}:
+        return await call_next(request)
+        
+    # 2. In serverless deployment, accept platform domains
+    if IS_SERVERLESS:
+        if any(host.endswith(suffix) for suffix in _ALLOWED_HOST_SUFFIXES):
+            return await call_next(request)
+            
+    logging.getLogger(__name__).warning(
+        "Blocked request with unexpected Host header: %r", host
+    )
+    return JSONResponse(
+        status_code=421,
+        content={"detail": "Misdirected request — domain unauthorized"},
+    )
 
 
 # ── Exception handler ─────────────────────────────────────────────────────────
