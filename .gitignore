@@ -1,12 +1,10 @@
 app/__pycache__/
 app/api/__pycache__/
-app/api/playground.py
 app/core/__pycache__/
 app/embedders/__pycache__/
 app/loaders/__pycache__/
 app/rerankers/__pycache__/
 app/services/__pycache__/
 app/splitters/__pycache__/
-app/static/js/playground.js
 app/vectorstores/__pycache__/
 data/
