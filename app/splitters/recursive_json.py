@@ -1,6 +1,5 @@
 import json
 import logging
-from langchain_text_splitters import RecursiveJsonSplitter
 from app.core.base import BaseSplitter
 from app.core.registry import ComponentRegistry
 
@@ -15,6 +14,7 @@ class RecursiveJsonSplitterWrapper(BaseSplitter):
         self.max_chunk_size = max_chunk_size
 
     def split(self, documents: list) -> list:
+        from langchain_text_splitters import RecursiveJsonSplitter
         from langchain_core.documents import Document
         splitter = RecursiveJsonSplitter(max_chunk_size=self.max_chunk_size)
         result = []

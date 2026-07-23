@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     transformers_offline: str = Field(default="0")
     log_level: str = Field(default="INFO")
     log_format: str = Field(default="json")
+    warm_default_model: bool = Field(default=False)
     max_upload_size_mb: int = Field(default=50)
     host: str = Field(default="0.0.0.0")
     port: int = Field(default=8000)
@@ -16,6 +17,10 @@ class Settings(BaseSettings):
     auth_password: str = Field(default="Til@k1234rao")
 
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
+
+    @property
+    def log_file(self) -> Path:
+        return self.data_dir / "logs" / "rag_studio.log"
 
     @property
     def uploads_dir(self) -> Path:
@@ -29,7 +34,17 @@ class Settings(BaseSettings):
     def db_path(self) -> Path:
         return self.data_dir / "rag_studio.db"
 
+    def storage_summary(self) -> dict[str, str]:
+        return {
+            "data_dir": str(self.data_dir),
+            "uploads_dir": str(self.uploads_dir),
+            "chroma_dir": str(self.chroma_dir),
+            "db_path": str(self.db_path),
+            "log_file": str(self.log_file),
+        }
+
     def ensure_dirs(self):
         self.uploads_dir.mkdir(parents=True, exist_ok=True)
         self.chroma_dir.mkdir(parents=True, exist_ok=True)
+        self.log_file.parent.mkdir(parents=True, exist_ok=True)
         self.data_dir.mkdir(parents=True, exist_ok=True)

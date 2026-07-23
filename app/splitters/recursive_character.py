@@ -1,4 +1,3 @@
-from langchain_text_splitters import RecursiveCharacterTextSplitter
 from app.core.base import BaseSplitter
 from app.core.registry import ComponentRegistry
 
@@ -13,6 +12,7 @@ class RecursiveCharacterSplitter(BaseSplitter):
         self.separators = separators
 
     def split(self, documents: list) -> list:
+        from langchain_text_splitters import RecursiveCharacterTextSplitter
         kwargs = {"chunk_size": self.chunk_size, "chunk_overlap": self.chunk_overlap}
         if self.separators:
             kwargs["separators"] = self.separators

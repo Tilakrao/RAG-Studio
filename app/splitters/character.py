@@ -1,4 +1,3 @@
-from langchain_text_splitters import CharacterTextSplitter
 from app.core.base import BaseSplitter
 from app.core.registry import ComponentRegistry
 
@@ -13,6 +12,7 @@ class CharacterSplitter(BaseSplitter):
         self.chunk_overlap = chunk_overlap
 
     def split(self, documents: list) -> list:
+        from langchain_text_splitters import CharacterTextSplitte
         splitter = CharacterTextSplitter(
             separator=self.separator,
             chunk_size=self.chunk_size,

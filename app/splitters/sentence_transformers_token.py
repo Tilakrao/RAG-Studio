@@ -1,4 +1,3 @@
-from langchain_text_splitters import SentenceTransformersTokenTextSplitter
 from app.core.base import BaseSplitter
 from app.core.registry import ComponentRegistry
 
@@ -12,6 +11,7 @@ class SentenceTransformersTokenSplitter(BaseSplitter):
         self.model_name = model_name
 
     def split(self, documents: list) -> list:
+        from langchain_text_splitters import SentenceTransformersTokenTextSplitter
         splitter = SentenceTransformersTokenTextSplitter(
             chunk_overlap=self.chunk_overlap,
             model_name=self.model_name,

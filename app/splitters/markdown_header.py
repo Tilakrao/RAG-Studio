@@ -1,4 +1,3 @@
-from langchain_text_splitters import MarkdownHeaderTextSplitter
 from app.core.base import BaseSplitter
 from app.core.registry import ComponentRegistry
 
@@ -15,6 +14,7 @@ class MarkdownHeaderSplitter(BaseSplitter):
         ]
 
     def split(self, documents: list) -> list:
+        from langchain_text_splitters import MarkdownHeaderTextSplitter
         splitter = MarkdownHeaderTextSplitter(
             headers_to_split_on=self.headers_to_split_on
         )

@@ -1,4 +1,3 @@
-from langchain_text_splitters import TokenTextSplitter
 from app.core.base import BaseSplitter
 from app.core.registry import ComponentRegistry
 
@@ -13,6 +12,7 @@ class TokenSplitter(BaseSplitter):
         self.encoding_name = encoding_name
 
     def split(self, documents: list) -> list:
+        from langchain_text_splitters import TokenTextSplitter
         splitter = TokenTextSplitter(
             chunk_size=self.chunk_size,
             chunk_overlap=self.chunk_overlap,
